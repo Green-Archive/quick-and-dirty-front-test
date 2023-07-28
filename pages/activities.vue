@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="pa-0">
     <v-toolbar elevation="4">
-      <v-toolbar-title>Activities</v-toolbar-title>
+      <v-toolbar-title>Users</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -12,6 +12,19 @@
 
             Add
           </v-btn>
+
+          <v-btn v-if="loggedIn" @click="logout" color="red" dark class="mb-2 mr-2">
+            <v-icon left> mdi-exit-to-app </v-icon>
+
+            Logout
+          </v-btn>
+
+          <v-btn v-else to="/" color="green" dark class="mb-2 mr-2"  >
+            <v-icon left> mdi-account </v-icon>
+
+            Login
+          </v-btn>
+
         </template>
         <v-card>
           <v-card-title class="blue">
@@ -73,7 +86,7 @@
           :items="activities"
           class="elevation-1"
         >
-          <template v-slot:item.actions="{ item }">
+          <template v-slot:[`item.actions`]="{ item }">
             <v-icon small class="mr-2" @click="editItem(item)">
               mdi-pencil
             </v-icon>
@@ -94,13 +107,17 @@
 </template>
 
 <script>
+import { getJwtToken } from "@/utils/auth";
+
 export default {
   data: () => ({
+  loggedIn: false,    
+  jwtToken: "",
     dialog: false,
     dialogDelete: false,
     headers: [
       {
-        text: "Activities",
+        text: "Users",
         align: "start",
         sortable: false,
         value: "name",
@@ -125,9 +142,23 @@ export default {
   },
 
   created() {
-    this.fetch_activities();
+    this.loggedIn = this.$auth.loggedIn;
+
+    this.initialize();
     // this.initialize();
   },
+
+  // async asyncData({ app }) {
+  //   // Fetch the token and set it in the axios defaults headers.
+  //   const jwtToken = getJwtToken();
+  //   if (jwtToken) {
+  //     app.$axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
+  //   }
+
+  //   // Fetch your activities data here and return it.
+  //   const activities = await app.$axios.$get('/activity');
+  //   return { activities };
+  // },
 
   methods: {
     initialize() {
@@ -185,7 +216,6 @@ export default {
     },
 
     async fetch_activities() {
-      // const apiURL = "https://hayai-hllc-test-hzri43hw3q-as.a.run.app";
       const apiURL = "/activity";
 
       try {
@@ -233,6 +263,11 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    async logout() {
+      await this.$auth.logout();
+      this.$router.push("/");
     },
   },
 };

@@ -43,13 +43,34 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    '@nuxtjs/auth'
+
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    // baseURL: "https://hayai-hllc-test-hzri43hw3q-as.a.run.app",
-    baseURL: "https://mental-back.mfu-cits.com/api/v1/",
+    baseURL: "http://127.0.0.1:5000/api/v1/",
+    credentials: true
+  },
+
+  auth: {
+    strategies: {
+      local: {
+
+  
+
+        endpoints: {
+          login: { url: 'auth/signin', method: 'post', propertyName: 'response.token' },
+          user: { url: 'test/user', method: 'get', propertyName: 'user' },
+          logout: false
+        },
+        tokenType: false,
+      }
+    },
+    redirect: {
+      login: '/'
+    }
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
