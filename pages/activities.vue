@@ -7,19 +7,25 @@
 
       <v-dialog v-model="dialog" max-width="500px">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+          <v-btn color="primary" dark class="mb-2 mx-1" v-bind="attrs" v-on="on">
             <v-icon left> mdi-plus </v-icon>
 
             Add
           </v-btn>
 
-          <v-btn v-if="loggedIn" @click="logout" color="red" dark class="mb-2 mr-2">
+          <v-btn @click="test_something" color="purple" dark class="mb-2 mx-1">
+            <v-icon left> mdi-minus </v-icon>
+
+            Test
+          </v-btn>
+
+          <v-btn v-if="loggedIn" @click="logout" color="red" dark class="mb-2 mx-1">
             <v-icon left> mdi-exit-to-app </v-icon>
 
             Logout
           </v-btn>
 
-          <v-btn v-else to="/" color="green" dark class="mb-2 mr-2"  >
+          <v-btn v-else to="/" color="green" dark class="mb-2 mx-1"  >
             <v-icon left> mdi-account </v-icon>
 
             Login
@@ -269,6 +275,15 @@ export default {
       await this.$auth.logout();
       this.$router.push("/");
     },
+    async test_something()
+    {
+      try {
+        await this.$axios.$get("/test");
+        console.log("test deleted successfully");
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
 };
 </script>

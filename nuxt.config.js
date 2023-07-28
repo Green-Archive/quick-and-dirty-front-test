@@ -50,6 +50,7 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: "http://127.0.0.1:5000/api/v1/",
+    // baseURL: "https://mental-back.mfu-cits.com/api/v1/",
     // credentials: true,
   },
 
@@ -64,17 +65,17 @@ export default {
           type: false,
         },
         user: {
-          property: "user",
+          property: "response.user",
           autoFetch: true,
         },
 
 
         endpoints: {
           login: {
-            url: "auth/signin",
+            url: "/auth/signin",
             method: "post",
           },
-          user: { url: "test/user", method: "get"},
+          user: { url: "/auth/profile", method: "get"},
           logout: false,
         },
       },
