@@ -1,34 +1,42 @@
 <template>
   <v-container>
-    <v-row class="mb-12" justify="center" align="center">
+    <v-row class="my-12" justify="center" align="center">
       <div class="text-h1">Admin</div>
     </v-row>
 
     <v-row justify="center" align="center">
+      <v-col cols="12">
+
       <v-text-field
         v-model="user.username"
         outlined
         label="User"
         prepend-inner-icon="mdi-account"
       ></v-text-field>
+    </v-col>
+
+      <v-col cols="12">
+
+      <v-text-field
+      v-model="user.password"
+      outlined
+      label="Password"
+      prepend-inner-icon="mdi-lock"
+      type="password"
+      ></v-text-field>
+    </v-col>
+    
+    <v-col cols="12">
+    <v-btn @click="login"> Login </v-btn>
+  </v-col>
     </v-row>
 
     <v-row justify="center" align="center">
-      <v-text-field
-        v-model="user.password"
-        outlined
-        label="Password"
-        prepend-inner-icon="mdi-lock"
-        type="password"
-      ></v-text-field>
-    </v-row>
-    <v-row justify="center" align="center">
-      <v-btn @click="login"> Login </v-btn>
       <!-- <v-btn to="/activities"> Login </v-btn> -->
     </v-row>
     
 
-    <v-snackbar v-model="snackbar" :timeout="2000">
+    <v-snackbar class="mb-5" v-model="snackbar" :timeout="2000">
       {{ snackbarText }}
 
       <template v-slot:action="{ attrs }">
@@ -86,8 +94,17 @@ export default {
             data: payload
           });
           this.$router.push('/activities');
-        } catch (e) {
-          this.$router.push('/');
+        } catch (error) {
+
+
+          if( error.response === undefined){
+            this.snackbarText = error.message;
+          } else {
+            this.snackbarText = error.response.data.message;
+          }
+
+
+          this.snackbar = true;
         }
       },
   },
