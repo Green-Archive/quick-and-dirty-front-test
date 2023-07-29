@@ -31,6 +31,7 @@ export default {
   plugins: [
     { src: "~/plugins/datePicker", mode: "client" },
     { src: "~/plugins/moment.js", ssr: false },
+    { src: "~/plugins/notifier.js" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

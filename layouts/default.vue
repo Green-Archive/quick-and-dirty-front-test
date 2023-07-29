@@ -40,12 +40,18 @@
         <Nuxt />
       </v-container>
     </v-main>
+    <Snackbar></Snackbar>
   </v-app>
 </template>
 
 <script>
+import Snackbar from "~/components/Snackbar.vue";
+
 export default {
   name: "DefaultLayout",
+  comments: {
+    Snackbar,
+  },
   computed: {
     currentPageName() {
       return (

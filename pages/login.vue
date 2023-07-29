@@ -25,7 +25,7 @@
       </v-col>
 
       <v-col cols="12">
-        <v-btn @click="login"> Login </v-btn>
+        <v-btn @click="signIn"> Login </v-btn>
       </v-col>
     </v-row>
 
@@ -61,23 +61,7 @@ export default {
   }),
   created() {},
   methods: {
-    async singIn() {
-      const apiURL = "/auth/signin";
-
-      try {
-        const res = await this.$axios.$post(apiURL, this.user);
-        // Save the token to localStorage
-        localStorage.setItem("jwtToken", res.response.token);
-
-        this.$router.push("/activities");
-        console.log(res.response.token);
-        //Bearer eyJhbGciOiJSUzI1NiIs Something like that
-      } catch (error) {
-        this.snackbar = true;
-        this.snackbarText = error.response.data.message;
-      }
-    },
-    async login(e) {
+    async signIn(e) {
       e.preventDefault();
 
       const payload = {

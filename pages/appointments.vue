@@ -11,7 +11,7 @@
             <v-toolbar color="pink" flat>
               <v-spacer></v-spacer>
 
-              <v-dialog v-model="dialog" max-width="800px">
+              <v-dialog v-model="dialog" max-width="800px" max-height="80svh">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     color="primary"
@@ -170,9 +170,11 @@ export default {
     },
 
     test_appointment() {
-      console.log(this.selectedUser);
-      console.log(this.selectedCounselor);
-      console.log(this.dateTime);
+      this.$notifier.showMessage({ content: "Hello, snackbar", color: "info" });
+
+      // console.log(this.selectedUser);
+      // console.log(this.selectedCounselor);
+      // console.log(this.dateTime);
     },
 
     async logout() {
