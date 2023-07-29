@@ -28,7 +28,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: "~/plugins/datePicker", mode: "client" }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -57,7 +57,6 @@ export default {
   auth: {
     strategies: {
       local: {
-
         token: {
           property: "response.token",
           global: true,
@@ -69,19 +68,18 @@ export default {
           autoFetch: true,
         },
 
-
         endpoints: {
           login: {
             url: "/auth/signin",
             method: "post",
           },
-          user: { url: "/auth/profile", method: "get"},
+          user: { url: "/auth/profile", method: "get" },
           logout: false,
         },
       },
     },
     redirect: {
-      login: "/",
+      login: "/login",
     },
   },
 
