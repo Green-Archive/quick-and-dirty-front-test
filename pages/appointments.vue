@@ -10,7 +10,70 @@
           <template v-slot:top>
             <v-toolbar color="pink" flat>
               <v-spacer></v-spacer>
+
+              <v-dialog v-model="dialog" max-width="800px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    dark
+                    class="mb-2"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    New Item
+                  </v-btn>
+                </template>
+
+                <v-card class="pa-5">
+                  <v-form @submit.prevent="appointment">
+                    <v-row class="ma-0 pa-0" justify="center" align="center">
+                      <v-col cols="7">
+                        <v-select
+                          v-model="selectedUser"
+                          :items="users"
+                          item-text="name"
+                          item-value="_id"
+                          label="Select User"
+                          required
+                        ></v-select>
+
+                        <v-select
+                          v-model="selectedCounselor"
+                          :items="counselors"
+                          item-text="user.name"
+                          item-value="_id"
+                          label="Select Counselor"
+                          required
+                        ></v-select>
+
+                        <date-picker
+                          v-model="dateTime"
+                          type="datetime"
+                        ></date-picker>
+                      </v-col>
+                    </v-row>
+
+                    <v-row class="ma-0 pa-0" justify="center" align="center">
+                      <v-col cols="7">
+                        <v-btn type="submit" color="primary"
+                          >Create Appointment</v-btn
+                        >
+
+                        <v-btn @click="test_appointment" color="green" dark>
+                          Test
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-form>
+                </v-card>
+              </v-dialog>
             </v-toolbar>
+          </template>
+
+          <template v-slot:[`item.dateTime`]="{ item }">
+            <!-- Format the dateTime using Moment.js in the table cell -->
+            {{ $moment(item.dateTime).format("YYYY-MM-DD") }}
+            <!-- {{ formatDate(item.dateTime) }} -->
           </template>
 
           <template v-slot:[`item.actions`]="{ item }">
@@ -29,42 +92,6 @@
         </v-data-table>
       </v-col>
     </v-row>
-
-    <v-form class="mt-10 mb-5" @submit.prevent="appointment">
-      <v-row justify="center" align="center">
-        <v-col cols="7">
-          <v-select
-            v-model="selectedUser"
-            :items="users"
-            item-text="username"
-            item-value="_id"
-            label="Select User"
-            required
-          ></v-select>
-
-          <v-select
-            v-model="selectedCounselor"
-            :items="counselors"
-            item-text="user.name"
-            item-value="_id"
-            label="Select Counselor"
-            required
-          ></v-select>
-
-          <date-picker v-model="dateTime" type="datetime"></date-picker>
-        </v-col>
-      </v-row>
-
-      <v-row justify="center" align="center">
-        <v-col cols="7">
-          <v-btn type="submit" color="primary">Create Appointment</v-btn>
-
-          <v-btn @click="test_appointment" color="green" dark class="mx-2">
-            Test
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-form>
   </v-container>
 </template>
 

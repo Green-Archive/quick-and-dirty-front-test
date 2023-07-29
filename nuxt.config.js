@@ -28,7 +28,10 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: "~/plugins/datePicker", mode: "client" }],
+  plugins: [
+    { src: "~/plugins/datePicker", mode: "client" },
+    { src: "~/plugins/moment.js", ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
