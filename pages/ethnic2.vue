@@ -27,10 +27,11 @@
                   <v-card-text>
                     <v-container>
                       <v-row>
+                        <!-- use the schema at here -->
                         <v-col cols="12">
                           <v-text-field
                             v-model="editedItem.name"
-                            label="Activity name"
+                            label="Name Field"
                           ></v-text-field>
                         </v-col>
                       </v-row>
@@ -48,6 +49,7 @@
             </v-toolbar>
           </template>
 
+          <!-- use the base_headers at here -->
           <template v-slot:[`item.actions`]="{ item }">
             <v-icon small class="mr-2" @click="editItem(item)">
               mdi-pencil
@@ -94,11 +96,7 @@ export default {
   layout: "default",
   mixins: [DialogMixin, APIMixin],
   data() {
-    return {
-      items: [],
-      editedItem: { name: "" },
-      defaultItem: { name: "" },
-    };
+    return {};
   },
 
   methods: {

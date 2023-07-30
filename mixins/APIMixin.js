@@ -6,10 +6,15 @@ const base_headers = [
   { text: "Actions", value: "actions", sortable: false },
 ];
 
+// it's a payload, you can change it to your own
+const base_schema = {
+  name: "",
+};
+
 const base_data = {
   items: [],
-  editedItem: { name: "" },
-  defaultItem: { name: "" },
+  editedItem: base_schema,
+  defaultItem: base_schema,
   headers: base_headers,
 };
 
@@ -22,7 +27,7 @@ export const APIMixin = {
       const response = await this.$axios.$get(`${base_url_api}`);
       this.items = response.response;
     } catch (error) {
-      console.log(error);
+      this.error_handler(error);
     }
   },
   methods: {
@@ -33,7 +38,7 @@ export const APIMixin = {
         this.$notifier.showMessage({ content: res.message, color: "red" });
         this.$fetch();
       } catch (error) {
-        console.log(error);
+        this.error_handler(error);
       }
     },
     async updateAPI() {
@@ -45,7 +50,7 @@ export const APIMixin = {
         this.$notifier.showMessage({ content: res.message, color: "blue" });
         this.$fetch();
       } catch (error) {
-        console.log(error);
+        this.error_handler(error);
       }
     },
     async createAPI() {
@@ -55,7 +60,26 @@ export const APIMixin = {
         this.$notifier.showMessage({ content: res.message, color: "green" });
         this.$fetch();
       } catch (error) {
-        console.log(error);
+        this.error_handler(error);
+      }
+    },
+
+    error_handler(error) {
+      if (error.response === undefined) {
+        this.$notifier.showMessage({
+          content: error.message,
+          color: "red",
+        });
+      } else if (error.response.error !== null) {
+        this.$notifier.showMessage({
+          content: error.response.data.error,
+          color: "red",
+        });
+      } else {
+        this.$notifier.showMessage({
+          content: error.message,
+          color: "red",
+        });
       }
     },
   },
