@@ -7,6 +7,8 @@
 
       <v-spacer></v-spacer>
 
+      <v-btn to="/ethnic" color="primary" dark class="mx-2"> ethnic </v-btn>
+
       <v-btn to="/users" color="primary" dark class="mx-2"> users </v-btn>
 
       <v-btn to="/activities" color="primary" dark class="mx-2">

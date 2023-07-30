@@ -65,7 +65,7 @@ export default {
           property: "response.token",
           global: true,
           required: true,
-          type: false,
+          type: "Bearer",
         },
         user: {
           property: "response.user",

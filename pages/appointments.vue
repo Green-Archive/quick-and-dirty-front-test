@@ -72,8 +72,7 @@
 
           <template v-slot:[`item.dateTime`]="{ item }">
             <!-- Format the dateTime using Moment.js in the table cell -->
-            {{ $moment(item.dateTime).format("YYYY-MM-DD") }}
-            <!-- {{ formatDate(item.dateTime) }} -->
+            {{ $moment(item.dateTime).format("YYYY-MM-DD HH:mm") }}
           </template>
 
           <template v-slot:[`item.actions`]="{ item }">
@@ -82,13 +81,7 @@
             </v-icon>
             <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
           </template>
-          <template v-slot:no-data>
-            <!-- <v-progress-linear
-              indeterminate
-              rounded
-              height="6"
-            ></v-progress-linear> -->
-          </template>
+          <template v-slot:no-data> </template>
         </v-data-table>
       </v-col>
     </v-row>
@@ -171,10 +164,6 @@ export default {
 
     test_appointment() {
       this.$notifier.showMessage({ content: "Hello, snackbar", color: "info" });
-
-      // console.log(this.selectedUser);
-      // console.log(this.selectedCounselor);
-      // console.log(this.dateTime);
     },
 
     async logout() {
