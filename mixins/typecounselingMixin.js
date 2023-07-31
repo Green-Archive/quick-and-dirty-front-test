@@ -2,7 +2,7 @@
 const base_url_api = "/typecounselings";
 
 const base_headers = [
-  { text: "Ethnic", align: "start", sortable: false, value: "name" },
+  { text: "TypeCounselings", align: "start", sortable: false, value: "name" },
   { text: "Actions", value: "actions", sortable: false },
 ];
 
@@ -44,9 +44,7 @@ export const APIMixin = {
     async updateAPI() {
       const apiURL = `${base_url_api}/${this.editedItem._id}`;
       try {
-        const res = await this.$axios.$put(apiURL, {
-          name: this.editedItem.name,
-        });
+        const res = await this.$axios.$put(apiURL, this.editedItem);
         this.$notifier.showMessage({ content: res.message, color: "blue" });
         this.$fetch();
       } catch (error) {

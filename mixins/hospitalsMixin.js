@@ -1,14 +1,19 @@
 // APIMixin.js
-const base_url_api = "/ethnics";
+const base_url_api = "/hospitals";
 
 const base_headers = [
-  { text: "Ethnics", align: "start", sortable: false, value: "name" },
+  { text: "Hospitals", align: "start", sortable: false, value: "name" },
+  { text: "Address", sortable: false, value: "address" },
+  { text: "Contact", sortable: false, value: "contact" },
+
   { text: "Actions", value: "actions", sortable: false },
 ];
 
 // it's a payload, you can change it to your own
 const base_schema = {
   name: "",
+  address: "",
+  contact: [],
 };
 
 const base_data = {

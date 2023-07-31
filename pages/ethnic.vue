@@ -111,7 +111,7 @@ export default {
 
       headers: [
         {
-          text: "Ethnic",
+          text: "Ethnics",
           align: "start",
           sortable: false,
           value: "name",
