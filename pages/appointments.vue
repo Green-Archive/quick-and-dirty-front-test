@@ -58,10 +58,6 @@
                         <v-btn type="submit" color="primary"
                           >Create Appointment</v-btn
                         >
-
-                        <v-btn @click="test_appointment" color="green" dark>
-                          Test
-                        </v-btn>
                       </v-col>
                     </v-row>
                   </v-form>
@@ -156,14 +152,10 @@ export default {
           dateTime: this.dateTime,
         });
         console.log(res);
-        this.$fetch();
+        (this.dialog = false), this.$fetch();
       } catch (err) {
         console.log(err);
       }
-    },
-
-    test_appointment() {
-      this.$notifier.showMessage({ content: "Hello, snackbar", color: "info" });
     },
 
     async logout() {

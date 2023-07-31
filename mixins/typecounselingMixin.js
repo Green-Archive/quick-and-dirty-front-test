@@ -1,5 +1,5 @@
 // APIMixin.js
-const base_url_api = "/ethnics";
+const base_url_api = "/typecounselings";
 
 const base_headers = [
   { text: "Ethnic", align: "start", sortable: false, value: "name" },

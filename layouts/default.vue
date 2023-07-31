@@ -7,13 +7,13 @@
 
       <v-spacer></v-spacer>
 
+      <v-btn to="/typecounseling" color="primary" dark class="mx-2">
+        typecounseling
+      </v-btn>
+
       <v-btn to="/ethnic" color="primary" dark class="mx-2"> ethnic </v-btn>
 
       <v-btn to="/users" color="primary" dark class="mx-2"> users </v-btn>
-
-      <v-btn to="/activities" color="primary" dark class="mx-2">
-        activities
-      </v-btn>
 
       <v-btn to="/appointments" color="primary" dark class="mx-2">
         appointments

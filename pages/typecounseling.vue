@@ -90,7 +90,7 @@
   
 <script>
 import { DialogMixin } from "@/mixins/DialogMixin";
-import { APIMixin } from "@/mixins/APIMixin";
+import { APIMixin } from "@/mixins/typecounselingMixin";
 
 export default {
   layout: "default",
