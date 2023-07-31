@@ -1,4 +1,3 @@
-// APIMixin.js
 const base_url_api = "/hospitals";
 
 const base_headers = [
@@ -24,7 +23,7 @@ const base_data = {
   headers: base_headers,
 };
 
-export const hospitals_api = {
+export const case_report_api = {
   data() {
     return base_data;
   },

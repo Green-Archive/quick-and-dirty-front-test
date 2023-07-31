@@ -33,6 +33,16 @@
                             v-model="editedItem.name"
                             label="Name Field"
                           ></v-text-field>
+
+                          <v-text-field
+                            v-model="editedItem.address"
+                            label="Address Field"
+                          ></v-text-field>
+
+                          <v-text-field
+                            v-model="editedItem.contact"
+                            label="Contact Field"
+                          ></v-text-field>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -86,16 +96,16 @@
     </v-dialog>
   </v-container>
 </template>
-  
-  
-<script>
+    
+    
+  <script>
 import { DialogMixin } from "@/mixins/DialogMixin";
 import { APIMixin } from "~/mixins/APIMixin";
-import { typecounselings_api } from "@/mixins/typecounselingsMixin";
+import { case_report_api } from "@/mixins/casereports";
 
 export default {
   layout: "default",
-  mixins: [DialogMixin, APIMixin, typecounselings_api],
+  mixins: [DialogMixin, APIMixin, case_report_api],
   data() {
     return {};
   },

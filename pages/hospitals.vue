@@ -100,11 +100,12 @@
   
 <script>
 import { DialogMixin } from "@/mixins/DialogMixin";
-import { APIMixin } from "@/mixins/hospitalsMixin";
+import { APIMixin } from "~/mixins/APIMixin";
+import { hospitals_api } from "@/mixins/hospitalsMixin";
 
 export default {
   layout: "default",
-  mixins: [DialogMixin, APIMixin],
+  mixins: [DialogMixin, APIMixin, hospitals_api],
   data() {
     return {};
   },

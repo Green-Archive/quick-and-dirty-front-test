@@ -1,48 +1,28 @@
 // APIMixin.js
-const base_url_api = "/ethnics";
-
-const base_headers = [
-  { text: "Ethnics", align: "start", sortable: false, value: "name" },
-  { text: "Actions", value: "actions", sortable: false },
-];
-
-// it's a payload, you can change it to your own
-const base_schema = {
-  name: "",
-};
-
-const base_data = {
-  items: [],
-  editedItem: base_schema,
-  defaultItem: base_schema,
-  headers: base_headers,
-};
 
 export const APIMixin = {
-  data() {
-    return base_data;
-  },
   async fetch() {
     try {
-      const response = await this.$axios.$get(`${base_url_api}`);
+      const response = await this.$axios.$get(`${this.base_url_api}`);
       this.items = response.response;
     } catch (error) {
       this.error_handler(error);
     }
   },
   methods: {
-    async deleteAPI(id) {
-      const apiURL = `${base_url_api}/${id}`;
+    async createAPI() {
+      const apiURL = `${base_url_api}`;
       try {
-        const res = await this.$axios.$delete(apiURL);
-        this.$notifier.showMessage({ content: res.message, color: "red" });
+        const res = await this.$axios.$post(apiURL, this.editedItem);
+        this.$notifier.showMessage({ content: res.message, color: "green" });
         this.$fetch();
       } catch (error) {
         this.error_handler(error);
       }
     },
+
     async updateAPI() {
-      const apiURL = `${base_url_api}/${this.editedItem._id}`;
+      const apiURL = `${this.base_url_api}/${this.editedItem._id}`;
       try {
         const res = await this.$axios.$put(apiURL, this.editedItem);
         this.$notifier.showMessage({ content: res.message, color: "blue" });
@@ -51,11 +31,12 @@ export const APIMixin = {
         this.error_handler(error);
       }
     },
-    async createAPI() {
-      const apiURL = `${base_url_api}`;
+
+    async deleteAPI(id) {
+      const apiURL = `${this.base_url_api}/${id}`;
       try {
-        const res = await this.$axios.$post(apiURL, this.editedItem);
-        this.$notifier.showMessage({ content: res.message, color: "green" });
+        const res = await this.$axios.$delete(apiURL);
+        this.$notifier.showMessage({ content: res.message, color: "red" });
         this.$fetch();
       } catch (error) {
         this.error_handler(error);

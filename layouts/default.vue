@@ -7,6 +7,10 @@
 
       <v-spacer></v-spacer>
 
+      <v-btn to="/casereports" color="primary" dark class="mx-2">
+        Case Report
+      </v-btn>
+
       <v-btn to="/hospitals" color="primary" dark class="mx-2">
         hospitals
       </v-btn>
