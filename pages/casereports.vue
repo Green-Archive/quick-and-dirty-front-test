@@ -30,18 +30,19 @@
                         <!-- use the schema at here -->
                         <v-col cols="12">
                           <v-text-field
-                            v-model="editedItem.name"
-                            label="Name Field"
+                            v-model="editedItem.note"
+                            label="Note Field"
                           ></v-text-field>
 
                           <v-text-field
-                            v-model="editedItem.address"
-                            label="Address Field"
+                            v-model="editedItem.level"
+                            label="Level Field"
+                            type="number"
                           ></v-text-field>
 
                           <v-text-field
-                            v-model="editedItem.contact"
-                            label="Contact Field"
+                            v-model="editedItem.record"
+                            label="Record Field"
                           ></v-text-field>
                         </v-col>
                       </v-row>

@@ -11,7 +11,7 @@ export const APIMixin = {
   },
   methods: {
     async createAPI() {
-      const apiURL = `${base_url_api}`;
+      const apiURL = `${this.base_url_api}`;
       try {
         const res = await this.$axios.$post(apiURL, this.editedItem);
         this.$notifier.showMessage({ content: res.message, color: "green" });

@@ -1,9 +1,10 @@
-const base_url_api = "/hospitals";
+const base_url_api = "/casereports";
 
 const base_headers = [
-  { text: "Hospitals", align: "start", sortable: false, value: "name" },
-  { text: "Address", sortable: false, value: "address" },
-  { text: "Contact", sortable: false, value: "contact" },
+  { text: "ID", align: "start", sortable: false, value: "_id" },
+  { text: "Address", sortable: false, value: "note" },
+  { text: "Contact", sortable: false, value: "level" },
+  { text: "Contact", sortable: false, value: "record" },
 
   { text: "Actions", value: "actions", sortable: false },
 ];
@@ -21,6 +22,8 @@ const base_data = {
   editedItem: base_schema,
   defaultItem: base_schema,
   headers: base_headers,
+
+  appointmentID: [],
 };
 
 export const case_report_api = {
