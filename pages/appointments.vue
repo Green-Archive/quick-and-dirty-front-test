@@ -84,7 +84,6 @@
   </v-container>
 </template>
 
-
 <script>
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
@@ -118,7 +117,7 @@ export default {
         { text: "Counselors", value: "counselor.user.name", sortable: false },
         { text: "Date Time", value: "dateTime", sortable: false },
 
-        { text: "Actions", value: "actions", sortable: false },
+        // { text: "Actions", value: "actions", sortable: false },
       ],
       dateTime: null,
     };

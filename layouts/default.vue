@@ -2,47 +2,30 @@
   <v-app>
     <v-app-bar app elevate-on-scroll>
       <v-toolbar-title>{{ currentPageName }}</v-toolbar-title>
-
-      <slot name="nav-items" />
-
       <v-spacer></v-spacer>
 
-      <v-btn to="/casereports" color="primary" dark class="mx-2">
-        Case Report
-      </v-btn>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-bind="attrs" v-on="on" color="primary" dark class="mx-2">
+            <v-icon left>mdi-dots-vertical</v-icon> More
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="(item, index) in moreButtons" :key="index">
+            <v-list-item-action>
+              <v-btn :to="item.to" color="primary" dark>
+                <v-icon left>{{ item.icon }}</v-icon> {{ item.label }}
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list>
+      </v-menu>
 
-      <v-btn to="/hospitals" color="primary" dark class="mx-2">
-        hospitals
-      </v-btn>
+      <!-- Add the rest of your buttons here -->
+      <!-- ... -->
 
-      <v-btn to="/typecounseling" color="primary" dark class="mx-2">
-        typecounseling
-      </v-btn>
-
-      <v-btn to="/ethnic" color="primary" dark class="mx-2"> ethnic </v-btn>
-
-      <v-btn to="/users" color="primary" dark class="mx-2"> users </v-btn>
-
-      <v-btn to="/appointments" color="primary" dark class="mx-2">
-        appointments
-      </v-btn>
-
-      <v-btn color="purple" dark class="mx-2">
-        <v-icon left>mdi-repeat</v-icon>
-        Test
-      </v-btn>
-
-      <div>
-        <v-btn v-if="!loggedIn" to="/login" color="green" dark class="mx-2">
-          <v-icon left>mdi-account</v-icon>
-          Login
-        </v-btn>
-
-        <v-btn v-else @click="logout" color="red" dark class="mx-2">
-          <v-icon left>mdi-exit-to-app</v-icon>
-          Logout
-        </v-btn>
-      </div>
+      <!-- Add the login/logout buttons -->
+      <!-- ... -->
     </v-app-bar>
 
     <v-main>
@@ -72,6 +55,19 @@ export default {
   data() {
     return {
       loggedIn: false,
+      moreButtons: [
+        { to: "/counselors", icon: "mdi-account", label: "Counselors" },
+        { to: "/casereports", icon: "mdi-file", label: "Case Report" },
+        { to: "/hospitals", icon: "mdi-hospital", label: "Hospitals" },
+        {
+          to: "/typecounseling",
+          icon: "mdi-bookmark",
+          label: "Type Counseling",
+        },
+        { to: "/ethnic", icon: "mdi-flag", label: "Ethnic" },
+        { to: "/users", icon: "mdi-account-multiple", label: "Users" },
+        { to: "/appointments", icon: "mdi-calendar", label: "Appointments" },
+      ],
     };
   },
 

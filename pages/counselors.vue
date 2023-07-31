@@ -1,0 +1,65 @@
+<template>
+  <v-container fluid class="pa-0 mb-5">
+    <v-row>
+      <v-col cols="12">
+        <v-data-table :headers="headers" :items="items" class="elevation-1">
+          <template v-slot:top>
+            <v-toolbar color="pink" flat>
+              <v-spacer></v-spacer>
+
+              <v-btn @click="test_something" color="green" class="mx-2" dark>
+                Test
+              </v-btn>
+            </v-toolbar>
+          </template>
+
+          <template v-slot:no-data> </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title class="red text-h5">Delete</v-card-title>
+
+        <v-card-text>
+          <v-container>
+            <v-row justify="center">
+              <v-col cols="12" sm="6" md="4" class="d-flex justify-center">
+                <div class="text-h5">Confirm</div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" outlined @click="closeDelete"
+            >Cancel</v-btn
+          >
+          <v-btn color="red darken-1" @click="deleteItemConfirm">Confirm</v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-container>
+</template>
+
+<script>
+import { DialogMixin } from "@/mixins/DialogMixin";
+import { APIMixin } from "~/mixins/APIMixin";
+import { counselors_api } from "~/mixins/counselorsMixin";
+
+export default {
+  layout: "default",
+  mixins: [DialogMixin, APIMixin, counselors_api],
+  data() {
+    return {};
+  },
+
+  methods: {
+    test_something() {
+      this.$notifier.showMessage({ content: "Hello, snackbar", color: "info" });
+    },
+  },
+};
+</script>

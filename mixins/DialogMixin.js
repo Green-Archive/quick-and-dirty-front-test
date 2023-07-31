@@ -45,7 +45,7 @@ export const DialogMixin = {
       });
     },
 
-    async save() {
+    save() {
       if (this.editedIndex > -1) {
         this.updateAPI();
       } else {

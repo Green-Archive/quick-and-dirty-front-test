@@ -97,12 +97,11 @@
     </v-dialog>
   </v-container>
 </template>
-    
-    
-  <script>
+
+<script>
 import { DialogMixin } from "@/mixins/DialogMixin";
 import { APIMixin } from "~/mixins/APIMixin";
-import { case_report_api } from "@/mixins/casereports";
+import { case_report_api } from "~/mixins/casereportsMixin";
 
 export default {
   layout: "default",
