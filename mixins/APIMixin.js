@@ -1,14 +1,6 @@
 // APIMixin.js
 
 export const APIMixin = {
-  async fetch() {
-    try {
-      const response = await this.$axios.$get(`${this.base_url_api}`);
-      this.items = response.response;
-    } catch (error) {
-      this.error_handler(error);
-    }
-  },
   methods: {
     async createAPI() {
       const apiURL = `${this.base_url_api}`;

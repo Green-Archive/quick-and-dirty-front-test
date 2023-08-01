@@ -15,6 +15,15 @@ export const DialogMixin = {
     },
   },
 
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+    dialogDelete(val) {
+      val || this.closeDelete();
+    },
+  },
+
   methods: {
     editItem(item) {
       this.editedIndex = this.items.indexOf(item);

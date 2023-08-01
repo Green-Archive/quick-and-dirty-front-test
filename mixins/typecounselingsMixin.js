@@ -11,6 +11,11 @@ const base_schema = {
   name: "",
 };
 
+// can't be the same because it will be bug
+const default_schema = {
+  name: "",
+};
+
 const base_data = {
   base_url_api: base_url_api,
   items: [],
@@ -22,5 +27,14 @@ const base_data = {
 export const typecounselings_api = {
   data() {
     return base_data;
+  },
+
+  async fetch() {
+    try {
+      const response = await this.$axios.$get(`${this.base_url_api}`);
+      this.items = response.response;
+    } catch (error) {
+      this.error_handler(error);
+    }
   },
 };

@@ -28,4 +28,13 @@ export const counselors_api = {
   data() {
     return base_data;
   },
+
+  async fetch() {
+    try {
+      const response = await this.$axios.$get(`${this.base_url_api}`);
+      this.items = response.response;
+    } catch (error) {
+      this.error_handler(error);
+    }
+  },
 };

@@ -16,16 +16,32 @@ const base_schema = {
   contact: [],
 };
 
+// can't be the same because it will be bug
+const default_schema = {
+  name: "",
+  address: "",
+  contact: [],
+};
+
 const base_data = {
   base_url_api: base_url_api,
   items: [],
   editedItem: base_schema,
-  defaultItem: base_schema,
+  defaultItem: default_schema,
   headers: base_headers,
 };
 
 export const hospitals_api = {
   data() {
     return base_data;
+  },
+
+  async fetch() {
+    try {
+      const response = await this.$axios.$get(`${this.base_url_api}`);
+      this.items = response.response;
+    } catch (error) {
+      this.error_handler(error);
+    }
   },
 };

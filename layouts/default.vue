@@ -4,6 +4,18 @@
       <v-toolbar-title>{{ currentPageName }}</v-toolbar-title>
       <v-spacer></v-spacer>
 
+      <div>
+        <v-btn v-if="!loggedIn" to="/login" color="green" dark class="mx-2">
+          <v-icon left>mdi-account</v-icon>
+          Login
+        </v-btn>
+
+        <v-btn v-else @click="logout" color="red" dark class="mx-2">
+          <v-icon left>mdi-exit-to-app</v-icon>
+          Logout
+        </v-btn>
+      </div>
+
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn v-bind="attrs" v-on="on" color="primary" dark class="mx-2">

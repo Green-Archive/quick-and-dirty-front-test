@@ -29,6 +29,22 @@
                       <v-row>
                         <!-- use the schema at here -->
                         <v-col cols="12">
+                          <v-select
+                            v-model="selectedAppointment"
+                            :items="appointments"
+                            :item-text="
+                              (item) =>
+                                item.user.name +
+                                ' ' +
+                                item.counselor.user.name +
+                                ' ' +
+                                $moment(item.dateTime).format('YYYY-MM-DD')
+                            "
+                            item-value="_id"
+                            label="Select Appointment"
+                            required
+                          ></v-select>
+
                           <v-text-field
                             v-model="editedItem.note"
                             label="Note Field"
@@ -61,6 +77,11 @@
           </template>
 
           <!-- use the base_headers at here -->
+          <template v-slot:[`item.appointmentID.dateTime`]="{ item }">
+            <!-- Format the dateTime using Moment.js in the table cell -->
+            {{ $moment(item.dateTime).format("YYYY-MM-DD HH:mm") }}
+          </template>
+
           <template v-slot:[`item.actions`]="{ item }">
             <v-icon small class="mr-2" @click="editItem(item)">
               mdi-pencil
