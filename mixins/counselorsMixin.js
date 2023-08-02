@@ -4,14 +4,13 @@ const base_headers = [
   { text: "Name", align: "start", sortable: false, value: "user.name" },
   { text: "Specializations", sortable: false, value: "specializations" },
   { text: "Detail", sortable: false, value: "detail" },
-  // { text: "Contact", sortable: false, value: "record" },
+  { text: "Actions", value: "actions", sortable: false },
 ];
 
 // it's a payload, you can change it to your own
 const base_schema = {
-  name: "",
-  address: "",
-  contact: [],
+  specializations: [],
+  detail: "",
 };
 
 const base_data = {

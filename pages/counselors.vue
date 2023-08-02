@@ -10,7 +10,55 @@
               <v-btn @click="test_something" color="green" class="mx-2" dark>
                 Test
               </v-btn>
+
+              <v-dialog v-model="dialog" max-width="500px">
+                <!-- <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                    <v-icon left> mdi-plus </v-icon>
+
+                    Add
+                  </v-btn>
+                </template> -->
+                <v-card>
+                  <v-card-title class="blue">
+                    <span class="text-h5">{{ formTitle }}</span>
+                  </v-card-title>
+
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <!-- use the schema at here -->
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="editedItem.specializations"
+                            label="Specializations Field"
+                          ></v-text-field>
+
+                          <v-text-field
+                            v-model="editedItem.detail"
+                            label="Detail Field"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+
+                  <v-card-actions class="d-flex justify-center">
+                    <v-btn color="blue darken-1" outlined @click="close"
+                      >Cancel</v-btn
+                    >
+                    <v-btn color="blue darken-1" @click="save">Confirm</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </v-toolbar>
+          </template>
+
+          <template v-slot:[`item.actions`]="{ item }">
+            <v-icon small class="mr-2" @click="editItem(item)">
+              mdi-pencil
+            </v-icon>
+            <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
           </template>
 
           <template v-slot:no-data> </template>
