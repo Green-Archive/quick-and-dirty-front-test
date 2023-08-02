@@ -3,7 +3,7 @@ const base_url_api = "/typecounselings";
 
 const base_headers = [
   { text: "TypeCounselings", align: "start", sortable: false, value: "name" },
-  { text: "Actions", value: "actions", sortable: false },
+  // { text: "Actions", value: "actions", sortable: false },
 ];
 
 // it's a payload, you can change it to your own
