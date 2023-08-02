@@ -21,16 +21,16 @@ const base_headers = [
 
 // it's a payload, you can change it to your own
 const base_schema = {
-  note: "",
-  level: "",
-  record: "",
+  note: null,
+  level: null,
+  record: null,
   appointmentID: null,
 };
 
 const default_schema = {
-  note: "",
-  level: "",
-  record: "",
+  note: null,
+  level: null,
+  record: null,
   appointmentID: null,
 };
 

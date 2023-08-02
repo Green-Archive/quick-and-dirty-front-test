@@ -70,7 +70,11 @@ export const forwardcases_api = {
     async updateAPI() {
       const apiURL = `${this.base_url_api}/${this.editedItem._id}`;
       try {
-        const res = await this.$axios.$put(apiURL, this.editedItem);
+        const res = await this.$axios.$put(apiURL, {
+          caseID: this.selected_casereport,
+          hospitalID: this.selected_hospital,
+          appointmentID: this.selected_appointment,
+        });
         this.$notifier.showMessage({ content: res.message, color: "blue" });
         this.$fetch();
       } catch (error) {
