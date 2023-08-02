@@ -7,7 +7,9 @@
             <v-toolbar color="pink" flat>
               <v-spacer></v-spacer>
 
-              <v-btn color="green" class="mx-2" dark> Test </v-btn>
+              <v-btn @click="test_something" color="green" class="mx-2" dark>
+                Test
+              </v-btn>
 
               <v-dialog v-model="dialog" max-width="500px">
                 <template v-slot:activator="{ on, attrs }">
@@ -25,10 +27,29 @@
                   <v-card-text>
                     <v-container>
                       <v-row>
-                        <!-- use the schema at here -->
                         <v-col cols="12">
+                          <!-- use the schema at here -->
+
                           <v-select
-                            v-model="selectedAppointment"
+                            v-model="selected_casereport"
+                            :items="casereports"
+                            item-text="_id"
+                            item-value="_id"
+                            label="Case Report Field"
+                            required
+                          ></v-select>
+
+                          <v-select
+                            v-model="selected_hospital"
+                            :items="hospitals"
+                            item-text="name"
+                            item-value="_id"
+                            label="Hospital Field"
+                            required
+                          ></v-select>
+
+                          <v-select
+                            v-model="selected_appointment"
                             :items="appointments"
                             :item-text="
                               (item) =>
@@ -39,25 +60,9 @@
                                 $moment(item.dateTime).format('YYYY-MM-DD')
                             "
                             item-value="_id"
-                            label="Select Appointment"
+                            label="Appointment Field"
                             required
                           ></v-select>
-
-                          <v-text-field
-                            v-model="editedItem.note"
-                            label="Note Field"
-                          ></v-text-field>
-
-                          <v-text-field
-                            v-model="editedItem.level"
-                            label="Level Field"
-                            type="number"
-                          ></v-text-field>
-
-                          <v-text-field
-                            v-model="editedItem.record"
-                            label="Record Field"
-                          ></v-text-field>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -75,13 +80,6 @@
           </template>
 
           <!-- use the base_headers at here -->
-          <template v-slot:[`item.appointmentID.dateTime`]="{ item }">
-            <!-- Format the dateTime using Moment.js in the table cell -->
-            {{
-              $moment(item.appointmentID.dateTime).format("YYYY-MM-DD HH:mm")
-            }}
-          </template>
-
           <template v-slot:[`item.actions`]="{ item }">
             <v-icon small class="mr-2" @click="editItem(item)">
               mdi-pencil
@@ -122,10 +120,19 @@
 <script>
 import { DialogMixin } from "@/mixins/DialogMixin";
 import { APIMixin } from "~/mixins/APIMixin";
-import { case_report_api } from "~/mixins/casereportsMixin";
+import { forwardcases_api } from "@/mixins/forwardcasesMixin";
 
 export default {
   layout: "default",
-  mixins: [DialogMixin, APIMixin, case_report_api],
+  mixins: [DialogMixin, APIMixin, forwardcases_api],
+  data() {
+    return {};
+  },
+
+  methods: {
+    test_something() {
+      this.$notifier.showMessage({ content: "Hello, snackbar", color: "info" });
+    },
+  },
 };
 </script>

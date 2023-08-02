@@ -1,26 +1,25 @@
 // APIMixin.js
-const base_url_api = "/hospitals";
+const base_url_api = "/forwardcases";
 
 const base_headers = [
-  { text: "Hospitals", align: "start", sortable: false, value: "name" },
-  { text: "Address", sortable: false, value: "address" },
-  { text: "Contact", sortable: false, value: "contact" },
+  { text: "Forward Case ID", align: "start", sortable: false, value: "_id" },
+  { text: "Hospital", value: "actions", sortable: false },
 
   { text: "Actions", value: "actions", sortable: false },
 ];
 
 // it's a payload, you can change it to your own
 const base_schema = {
-  name: "",
-  address: "",
-  contact: [],
+  caseID: null,
+  hospitalID: null,
+  appointmentID: null,
 };
 
 // can't be the same because it will be bug
 const default_schema = {
-  name: "",
-  address: "",
-  contact: [],
+  caseID: null,
+  selected_hospital: null,
+  appointmentID: null,
 };
 
 const base_data = {
@@ -29,9 +28,16 @@ const base_data = {
   editedItem: base_schema,
   defaultItem: default_schema,
   headers: base_headers,
+
+  casereports: [],
+  selected_casereport: null,
+  hospitals: [],
+  selected_hospital: null,
+  appointments: [],
+  selected_appointment: null,
 };
 
-export const hospitals_api = {
+export const forwardcases_api = {
   data() {
     return base_data;
   },
@@ -64,6 +70,15 @@ export const hospitals_api = {
     try {
       const response = await this.$axios.$get(`${this.base_url_api}`);
       this.items = response.response;
+
+      const hospitals = await this.$axios.$get(`/hospitals`);
+      this.hospitals = hospitals.response;
+
+      const appointments = await this.$axios.$get(`/appointments`);
+      this.appointments = appointments.response;
+
+      const casereports = await this.$axios.$get(`/casereports`);
+      this.casereports = casereports.response;
     } catch (error) {
       this.error_handler(error);
     }

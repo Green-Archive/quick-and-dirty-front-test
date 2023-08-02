@@ -21,15 +21,17 @@ const base_headers = [
 
 // it's a payload, you can change it to your own
 const base_schema = {
-  name: "",
-  address: "",
-  contact: [],
+  note: "",
+  level: "",
+  record: "",
+  appointmentID: null,
 };
 
 const default_schema = {
-  name: "",
-  address: "",
-  contact: [],
+  note: "",
+  level: "",
+  record: "",
+  appointmentID: null,
 };
 
 const base_data = {
@@ -46,6 +48,44 @@ const base_data = {
 export const case_report_api = {
   data() {
     return base_data;
+  },
+
+  methods: {
+    async createAPI() {
+      const apiURL = `${this.base_url_api}`;
+      try {
+        const res = await this.$axios.$post(apiURL, {
+          note: this.editedItem.note,
+          level: this.editedItem.level,
+          record: this.editedItem.record,
+          appointmentID: this.selectedAppointment,
+        });
+        // this.$notifier.showMessage({ content: res.message, color: "green" });
+        this.$notifier.showMessage({
+          content: this.editedItem.note,
+          color: "green",
+        });
+        this.$fetch();
+      } catch (error) {
+        this.error_handler(error);
+      }
+    },
+
+    async updateAPI() {
+      const apiURL = `${this.base_url_api}/${this.editedItem._id}`;
+      try {
+        const res = await this.$axios.$put(apiURL, {
+          note: this.editedItem.note,
+          level: this.editedItem.level,
+          record: this.editedItem.record,
+          appointmentID: this.selectedAppointment,
+        });
+        this.$notifier.showMessage({ content: res.message, color: "blue" });
+        this.$fetch();
+      } catch (error) {
+        this.error_handler(error);
+      }
+    },
   },
 
   async fetch() {

@@ -29,6 +29,30 @@ export const counselors_api = {
     return base_data;
   },
 
+  methods: {
+    async createAPI() {
+      const apiURL = `${this.base_url_api}`;
+      try {
+        const res = await this.$axios.$post(apiURL, this.editedItem);
+        this.$notifier.showMessage({ content: res.message, color: "green" });
+        this.$fetch();
+      } catch (error) {
+        this.error_handler(error);
+      }
+    },
+
+    async updateAPI() {
+      const apiURL = `${this.base_url_api}/${this.editedItem._id}`;
+      try {
+        const res = await this.$axios.$put(apiURL, this.editedItem);
+        this.$notifier.showMessage({ content: res.message, color: "blue" });
+        this.$fetch();
+      } catch (error) {
+        this.error_handler(error);
+      }
+    },
+  },
+
   async fetch() {
     try {
       const response = await this.$axios.$get(`${this.base_url_api}`);

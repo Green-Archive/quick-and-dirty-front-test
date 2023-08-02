@@ -79,6 +79,11 @@ export default {
         { to: "/ethnic", icon: "mdi-flag", label: "Ethnic" },
         { to: "/users", icon: "mdi-account-multiple", label: "Users" },
         { to: "/appointments", icon: "mdi-calendar", label: "Appointments" },
+        {
+          to: "/forwardcases",
+          icon: "mdi-fast-forward",
+          label: "ForwardCases",
+        },
       ],
     };
   },
