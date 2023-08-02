@@ -10,7 +10,7 @@ const base_headers = [
     value: "appointmentID.counselor.user.name",
   },
   { text: "User", sortable: false, value: "appointmentID.user.name" },
-  { text: "User", sortable: false, value: "appointmentID.dateTime" },
+  { text: "Appointment", sortable: false, value: "appointmentID.dateTime" },
 
   { text: "Note", sortable: false, value: "note" },
   { text: "Level", sortable: false, value: "level" },

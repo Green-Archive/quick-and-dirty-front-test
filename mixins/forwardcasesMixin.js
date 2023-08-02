@@ -2,24 +2,33 @@
 const base_url_api = "/forwardcases";
 
 const base_headers = [
-  { text: "Forward Case ID", align: "start", sortable: false, value: "_id" },
-  { text: "Hospital", value: "actions", sortable: false },
+  // { text: "Forward Case ID", align: "start", sortable: false, value: "_id" },
+  { text: "Hospital", value: "hospitalID.name", sortable: false },
+  {
+    text: "Counselor",
+    align: "start",
+    sortable: false,
+    value: "appointmentID.counselor.user.name",
+  },
+  { text: "User", sortable: false, value: "appointmentID.user.name" },
+  { text: "Appointment", value: "appointmentID.dateTime", sortable: false },
+  { text: "Case Report", value: "caseID", sortable: false },
 
   { text: "Actions", value: "actions", sortable: false },
 ];
 
 // it's a payload, you can change it to your own
 const base_schema = {
-  caseID: null,
-  hospitalID: null,
-  appointmentID: null,
+  caseID: "",
+  hospitalID: "",
+  appointmentID: "",
 };
 
 // can't be the same because it will be bug
 const default_schema = {
-  caseID: null,
-  selected_hospital: null,
-  appointmentID: null,
+  caseID: "",
+  hospitalID: "",
+  appointmentID: "",
 };
 
 const base_data = {
@@ -30,11 +39,11 @@ const base_data = {
   headers: base_headers,
 
   casereports: [],
-  selected_casereport: null,
+  selected_casereport: "",
   hospitals: [],
-  selected_hospital: null,
+  selected_hospital: "",
   appointments: [],
-  selected_appointment: null,
+  selected_appointment: "",
 };
 
 export const forwardcases_api = {
@@ -46,7 +55,11 @@ export const forwardcases_api = {
     async createAPI() {
       const apiURL = `${this.base_url_api}`;
       try {
-        const res = await this.$axios.$post(apiURL, this.editedItem);
+        const res = await this.$axios.$post(apiURL, {
+          caseID: this.selected_casereport,
+          hospitalID: this.selected_hospital,
+          appointmentID: this.selected_appointment,
+        });
         this.$notifier.showMessage({ content: res.message, color: "green" });
         this.$fetch();
       } catch (error) {

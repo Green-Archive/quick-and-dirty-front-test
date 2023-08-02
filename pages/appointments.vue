@@ -141,15 +141,6 @@ export default {
     this.loggedIn = this.$auth.loggedIn;
   },
 
-  watch: {
-    dialog(val) {
-      val || this.close();
-    },
-    dialogDelete(val) {
-      val || this.closeDelete();
-    },
-  },
-
   methods: {
     async appointment() {
       const apiURL = "/appointments";
