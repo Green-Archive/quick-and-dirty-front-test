@@ -68,6 +68,8 @@ export default {
     return {
       loggedIn: false,
       moreButtons: [
+        { to: "/answers", icon: "mdi-account", label: "Answers" },
+        { to: "/questions", icon: "mdi-account", label: "Questions" },
         { to: "/counselors", icon: "mdi-account", label: "Counselors" },
         { to: "/casereports", icon: "mdi-file", label: "Case Report" },
         { to: "/hospitals", icon: "mdi-hospital", label: "Hospitals" },
@@ -83,6 +85,11 @@ export default {
           to: "/forwardcases",
           icon: "mdi-fast-forward",
           label: "ForwardCases",
+        },
+        {
+          to: "/questionforms",
+          icon: "mdi-fast-forward",
+          label: "QuestionForms",
         },
       ],
     };
