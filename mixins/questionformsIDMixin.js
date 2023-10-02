@@ -1,5 +1,5 @@
 // APIMixin.js
-const base_url_api = "/questionforms";
+const base_url_api = "/v1/questionforms";
 
 const base_headers = [
   { text: "Text", align: "start", sortable: false, value: "text" },

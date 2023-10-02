@@ -1,4 +1,4 @@
-const base_url_api = "/users";
+const base_url_api = "/v1/users";
 
 const base_headers = [
   {

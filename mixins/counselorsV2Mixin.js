@@ -1,54 +1,36 @@
 // APIMixin.js
-const base_url_api = "/v1/answers";
+const base_url_api = "/v2/counselors";
 
 const base_headers = [
-  { text: "Form ID", value: "formID.title" },
-  { text: "Question ID", value: "questionID.text" },
-  { text: "Score", value: "score" },
-  { text: "Text", value: "text" },
+  { text: "ID", align: "start", sortable: false, value: "_id" },
+  { text: "Name", value: "name", sortable: false },
+  // { text: "Actions", value: "actions", sortable: false },
 ];
 
 // it's a payload, you can change it to your own
 const base_schema = {
-  text: "",
+  title: "",
+  description: "",
 };
 
 // can't be the same because it will be bug
 const default_schema = {
-  text: "",
+  title: "",
+  description: "",
 };
 
 const base_data = {
+  expanded: [],
   base_url_api: base_url_api,
   items: [],
   editedItem: base_schema,
   defaultItem: default_schema,
   headers: base_headers,
-  groupByField: "formID._id",
 };
 
-export const questions_api = {
+export const counselors_api = {
   data() {
     return base_data;
-  },
-
-  computed: {
-    groupedAnswers() {
-      // Group the answers by the specified field (formID in this case)
-      const grouped = this.answers.reduce((acc, answer) => {
-        const key = answer[this.groupByField].toString();
-        if (!acc[key]) {
-          acc[key] = [];
-        }
-        acc[key].push(answer);
-        return acc;
-      }, {});
-      // Convert the grouped object to an array of groups
-      return Object.entries(grouped).map(([key, items]) => ({
-        groupBy: key,
-        items,
-      }));
-    },
   },
 
   methods: {
@@ -78,7 +60,7 @@ export const questions_api = {
   async fetch() {
     try {
       const response = await this.$axios.$get(`${this.base_url_api}`);
-      this.items = response.response;
+      this.items = response.data;
     } catch (error) {
       this.error_handler(error);
     }

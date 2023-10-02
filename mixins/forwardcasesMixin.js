@@ -1,5 +1,5 @@
 // APIMixin.js
-const base_url_api = "/forwardcases";
+const base_url_api = "/v1/forwardcases";
 
 const base_headers = [
   // { text: "Forward Case ID", align: "start", sortable: false, value: "_id" },

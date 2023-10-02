@@ -1,4 +1,4 @@
-const base_url_api = "/counselors";
+const base_url_api = "/v1/counselors";
 
 const base_headers = [
   { text: "Name", align: "start", sortable: false, value: "user.name" },

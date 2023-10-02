@@ -1,5 +1,5 @@
 // APIMixin.js
-const base_url_api = "/ethnicities";
+const base_url_api = "/v2/ethnicities";
 
 const base_headers = [
   { text: "ID", align: "start", sortable: false, value: "_id" },

@@ -1,26 +1,96 @@
 <template>
+  <v-dialog v-model="dialog" max-width="600px" @click:outside="closeDialog">
+    <v-card>
+      <v-card-title> Image Viewer </v-card-title>
+      <!-- <v-img
+        style="border-radius: 50%; border: 5px solid #89c7bc; cursor: pointer"
+        alt="seki"
+        :src="image"
+      /> -->
+      <cropper ref="cropper" class="upload-example-cropper" :src="image" />
+      <v-card-actions>
+        <v-btn color="primary" @click="closeDialog">Close</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+export default {
+  data() {
+    return {};
+  },
+  props: {
+    dialog: {
+      type: Boolean,
+      default: false,
+    },
+    coordinates: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    image: {
+      type: String,
+      default: "/seki.png",
+    },
+  },
+  methods: {
+    closeDialog() {
+      this.$emit("close");
+    },
+  },
+};
+</script>
+
+
+<!-- <template>
   <v-container fluid class="pa-0">
     <v-row class="mt-12" justify="center">
       <v-col cols="3">
+        <!-- <vue-cropper ref="cropper" src="/seki.png" alt="Source Image">
+        </vue-cropper> -->
+
+        <!-- <cropper ref="cropper" src="/seki.png" @change="change" /> -->
+
+        <!-- <div>
+          <v-img
+            style="
+              border-radius: 50%;
+              border: 5px solid #89c7bc;
+              cursor: pointer;
+            "
+            :src="placeholderImage"
+            @click="openDialog"
+            alt="seki"
+          />
+         
+        </div> -->
+
+        <!-- <cropper
+          ref="cropper"
+          class="upload-example-cropper"
+          :src="image.src"
+        /> -->
+
         <image-viewer-dialog
           :coordinates="coordinates"
           :src="image.src"
           :dialog="dialog"
           @close="closeDialog"
-          @cropped="handleCroppedImage"
         />
 
         <div>
           <v-menu v-model="menu" :close-on-content-click="false" offset-y>
             <template v-slot:activator="{ on }">
               <v-img
-                ref="cropper"
                 style="
                   border-radius: 50%;
                   border: 5px solid #89c7bc;
                   cursor: pointer;
                 "
-                :src="croppedImage ?? defaultImage"
+                :src="defaultImage"
                 alt="seki"
                 v-on="on"
               />
@@ -46,10 +116,20 @@
           </v-menu>
         </div>
       </v-col>
-    </v-row>
 
-    <v-row justify="center">
-      <v-btn @click="createUsers">KIM</v-btn>
+      <v-col cols="3">
+        <v-row>
+          <!-- <v-col cols="1"
+            ><v-card color="red">
+              <v-btn @click="crop">kim</v-btn>
+            </v-card>
+          </v-col> -->
+        </v-row>
+      </v-col>
+
+      <v-col cols="3">
+        <!-- <results :coordinates="coordinates" :image="image" /> -->
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -84,6 +164,7 @@ export default {
   data() {
     return {
       menu: false,
+      selectedImageSrc: "/seki.png",
       defaultImage: "/seki.png",
       dialog: false,
       coordinates: {
@@ -98,10 +179,13 @@ export default {
       },
 
       croppedImage: null,
-      croppedImageBlob: null,
 
       loggedIn: false,
     };
+  },
+
+  created() {
+    this.loggedIn = this.$auth.loggedIn;
   },
 
   methods: {
@@ -135,86 +219,51 @@ export default {
       };
     },
     loadImage(event) {
+      // Reference to the DOM input element
       const { files } = event.target;
+      // Ensure that you have a file before attempting to read it
       if (files && files[0]) {
+        // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
         if (this.image.src) {
           URL.revokeObjectURL(this.image.src);
         }
+        // 2. Create the blob link to the file to optimize performance:
         const blob = URL.createObjectURL(files[0]);
 
+        // 3. The steps below are designated to determine a file mime type to use it during the
+        // getting of a cropped image from the canvas. You can replace it them by the following string,
+        // but the type will be derived from the extension and it can lead to an incorrect result:
+        //
+        // this.image = {
+        //    src: blob;
+        //    type: files[0].type
+        // }
+
+        // Create a new FileReader to read this image binary data
         const reader = new FileReader();
+        // Define a callback function to run, when FileReader finishes its job
         reader.onload = (e) => {
+          // Note: arrow function used here, so that "this.image" refers to the image of Vue component
           this.image = {
+            // Set the image source (it will look like blob:http://example.com/2c5270a5-18b5-406e-a4fb-07427f5e7b94)
             src: blob,
+            // Determine the image type to preserve it during the extracting the image from canvas:
             type: getMimeType(e.target.result, files[0].type),
           };
 
           this.menu = false;
           this.openDialog();
         };
+        // Start the reader job - read file as a data url (base64 format)
         reader.readAsArrayBuffer(files[0]);
       }
     },
-    destroyed() {
-      if (this.image.src) {
-        URL.revokeObjectURL(this.image.src);
-      }
-    },
-    async handleCroppedImage(croppedImage) {
-      this.croppedImage = croppedImage;
-      const blob = this.dataURLtoBlob(croppedImage);
-
-      this.croppedImageBlob = blob;
-
-      console.log(blob);
-    },
-
-    dataURLtoBlob(dataURL) {
-      const parts = dataURL.split(",");
-      const mime = parts[0].match(/:(.*?);/)[1];
-      const b64 = atob(parts[1]);
-      let n = b64.length;
-      const u8arr = new Uint8Array(n);
-
-      while (n--) {
-        u8arr[n] = b64.charCodeAt(n);
-      }
-
-      return new Blob([u8arr], { type: mime });
-    },
-
-    async createUsers() {
-      const random_username = () => {
-        const random_number = Math.floor(Math.random() * 1000000);
-        return "test" + random_number;
-      };
-
-      // Create a FormData object
-      const formData = new FormData();
-
-      // Append your data fields to the FormData object
-      formData.append("username", random_username());
-      formData.append("password", "1234");
-      formData.append("name", "test");
-      formData.append("nickName", "test");
-      formData.append("dateOfBirth", "2002-08-16T00:00:00.000Z");
-      formData.append("gender", "male");
-      formData.append("address", "64fad95f6e5cd715e5d48f63");
-      formData.append("language", "64f077e72cd12130c7cbeec0");
-      formData.append("ethnicity", "64fd179ac9d8915adcca1173"); // Assuming user.ethnicity is a valid ObjectId for the "ethnicity" model
-      formData.append("phoneNumber", "010-1234-5678");
-
-      // Append your image Blob to the FormData object with a specific field name, e.g., "profileImg"
-      formData.append("profileImg", this.croppedImageBlob, "profileImg.png");
-
-      // Send the FormData object in your POST request
-      const res = await this.$axios.post(
-        "http://localhost:5005/api/users/",
-        formData
-      );
-      console.log(res.data.data);
-      return res;
-    },
+  },
+  destroyed() {
+    // Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
+    if (this.image.src) {
+      URL.revokeObjectURL(this.image.src);
+    }
   },
 };
-</script>
+</script> -->

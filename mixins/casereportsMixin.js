@@ -1,4 +1,4 @@
-const base_url_api = "/casereports";
+const base_url_api = "/v1/casereports";
 
 const base_headers = [
   // { text: "ID", align: "start", sortable: false, value: "_id" },

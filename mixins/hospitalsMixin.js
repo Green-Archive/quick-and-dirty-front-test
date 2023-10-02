@@ -1,5 +1,5 @@
 // APIMixin.js
-const base_url_api = "/hospitals";
+const base_url_api = "/v1/hospitals";
 
 const base_headers = [
   { text: "Hospitals", align: "start", sortable: false, value: "name" },

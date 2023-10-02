@@ -1,5 +1,5 @@
 // APIMixin.js
-const base_url_api = "/typecounselings";
+const base_url_api = "/v1/typecounselings";
 
 const base_headers = [
   { text: "TypeCounselings", align: "start", sortable: false, value: "name" },
