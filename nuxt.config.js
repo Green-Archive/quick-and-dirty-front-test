@@ -30,7 +30,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: "~/plugins/datePicker", mode: "client" },
-    // { src: "~/plugins/cropImg" },
+    { src: "~/plugins/cropImg", ssr: false },
     { src: "~/plugins/moment.js", ssr: false },
     { src: "~/plugins/notifier.js" },
   ],

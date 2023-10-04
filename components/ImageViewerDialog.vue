@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <v-dialog v-model="dialog" max-width="600px" @click:outside="closeDialog">
     <v-card>
       <v-card-title> Image Viewer </v-card-title>
@@ -68,4 +68,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->

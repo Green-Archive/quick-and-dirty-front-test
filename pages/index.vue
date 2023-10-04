@@ -2,15 +2,33 @@
   <v-container fluid class="pa-0">
     <v-row class="mt-12" justify="center">
       <v-col cols="3">
-        <image-viewer-dialog
+        <!-- <image-viewer-dialog
           :coordinates="coordinates"
           :src="image.src"
           :dialog="dialog"
           @close="closeDialog"
           @cropped="handleCroppedImage"
-        />
+        /> -->
+        <a class="btn" @click="toggleShow">set avatar</a>
+        <vue-cropper
+          field="img"
+          @crop-success="cropSuccess"
+          @crop-upload-success="cropUploadSuccess"
+          @crop-upload-fail="cropUploadFail"
+          v-model="show"
+          :width="300"
+          :height="300"
+          url="/upload"
+          :params="params"
+          :headers="headers"
+          img-format="png"
+        ></vue-cropper>
+        <img :src="imgDataUrl" />
 
-        <div>
+        <!-- <vue-cropper ref="cropper" src="/seki.png" alt="Source Image">
+        </vue-cropper> -->
+
+        <!-- <div>
           <v-menu v-model="menu" :close-on-content-click="false" offset-y>
             <template v-slot:activator="{ on }">
               <v-img
@@ -24,12 +42,13 @@
                 alt="seki"
                 v-on="on"
               />
+
+              
+
             </template>
             <v-list>
-              <v-list-item>
-                <v-list-item-title @click="$refs.file.click()"
-                  >Upload a Photo</v-list-item-title
-                >
+              <v-list-item @click="$refs.file.click()">
+                <v-list-item-title>Upload a Photo</v-list-item-title>
 
                 <input
                   type="file"
@@ -44,13 +63,13 @@
               </v-list-item>
             </v-list>
           </v-menu>
-        </div>
+        </div> -->
       </v-col>
     </v-row>
 
-    <v-row justify="center">
-      <v-btn @click="createUsers">KIM</v-btn>
-    </v-row>
+    <!-- <v-row justify="center">
+      <v-btn @click="this.$refs.cropper.rotate(45)">KIM</v-btn>
+    </v-row> -->
   </v-container>
 </template>
 
@@ -83,137 +102,53 @@ export default {
 
   data() {
     return {
-      menu: false,
-      defaultImage: "/seki.png",
-      dialog: false,
-      coordinates: {
-        width: 0,
-        height: 0,
-        left: 0,
-        top: 0,
+      show: true,
+      params: {
+        token: "123456798",
+        name: "avatar",
       },
-      image: {
-        src: null,
-        type: null,
+      headers: {
+        smail: "*_~",
       },
-
-      croppedImage: null,
-      croppedImageBlob: null,
-
-      loggedIn: false,
+      imgDataUrl: "", // the datebase64 url of created image
     };
   },
 
   methods: {
-    openDialog() {
-      this.dialog = true;
+    toggleShow() {
+      this.show = !this.show;
     },
-    closeDialog() {
-      this.dialog = false;
-      this.reset();
+    /**
+     * crop success
+     *
+     * [param] imgDataUrl
+     * [param] field
+     */
+    cropSuccess(imgDataUrl, field) {
+      console.log("-------- crop success --------");
+      this.imgDataUrl = imgDataUrl;
     },
-    handleImageError() {
-      // This function is called when the image fails to load
-      // You can set a default image source or handle the error as needed
-      this.editedItem.profileImg = this.defaultImage; // Replace with your default image path
+    /**
+     * upload success
+     *
+     * [param] jsonData  server api return data, already json encode
+     * [param] field
+     */
+    cropUploadSuccess(jsonData, field) {
+      console.log("-------- upload success --------");
+      console.log(jsonData);
+      console.log("field: " + field);
     },
-    async logout() {
-      await this.$auth.logout();
-      window.location.reload(true);
-    },
-
-    crop() {
-      const { canvas } = this.$refs.cropper.getResult();
-      canvas.toBlob((blob) => {
-        // Do something with blob: upload to a server, download and etc.
-      }, this.image.type);
-    },
-    reset() {
-      this.image = {
-        src: null,
-        type: null,
-      };
-    },
-    loadImage(event) {
-      const { files } = event.target;
-      if (files && files[0]) {
-        if (this.image.src) {
-          URL.revokeObjectURL(this.image.src);
-        }
-        const blob = URL.createObjectURL(files[0]);
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.image = {
-            src: blob,
-            type: getMimeType(e.target.result, files[0].type),
-          };
-
-          this.menu = false;
-          this.openDialog();
-        };
-        reader.readAsArrayBuffer(files[0]);
-      }
-    },
-    destroyed() {
-      if (this.image.src) {
-        URL.revokeObjectURL(this.image.src);
-      }
-    },
-    async handleCroppedImage(croppedImage) {
-      this.croppedImage = croppedImage;
-      const blob = this.dataURLtoBlob(croppedImage);
-
-      this.croppedImageBlob = blob;
-
-      console.log(blob);
-    },
-
-    dataURLtoBlob(dataURL) {
-      const parts = dataURL.split(",");
-      const mime = parts[0].match(/:(.*?);/)[1];
-      const b64 = atob(parts[1]);
-      let n = b64.length;
-      const u8arr = new Uint8Array(n);
-
-      while (n--) {
-        u8arr[n] = b64.charCodeAt(n);
-      }
-
-      return new Blob([u8arr], { type: mime });
-    },
-
-    async createUsers() {
-      const random_username = () => {
-        const random_number = Math.floor(Math.random() * 1000000);
-        return "test" + random_number;
-      };
-
-      // Create a FormData object
-      const formData = new FormData();
-
-      // Append your data fields to the FormData object
-      formData.append("username", random_username());
-      formData.append("password", "1234");
-      formData.append("name", "test");
-      formData.append("nickName", "test");
-      formData.append("dateOfBirth", "2002-08-16T00:00:00.000Z");
-      formData.append("gender", "male");
-      formData.append("address", "64fad95f6e5cd715e5d48f63");
-      formData.append("language", "64f077e72cd12130c7cbeec0");
-      formData.append("ethnicity", "64fd179ac9d8915adcca1173"); // Assuming user.ethnicity is a valid ObjectId for the "ethnicity" model
-      formData.append("phoneNumber", "010-1234-5678");
-
-      // Append your image Blob to the FormData object with a specific field name, e.g., "profileImg"
-      formData.append("profileImg", this.croppedImageBlob, "profileImg.png");
-
-      // Send the FormData object in your POST request
-      const res = await this.$axios.post(
-        "http://localhost:5005/api/users/",
-        formData
-      );
-      console.log(res.data.data);
-      return res;
+    /**
+     * upload fail
+     *
+     * [param] status    server api return error status, like 500
+     * [param] field
+     */
+    cropUploadFail(status, field) {
+      console.log("-------- upload fail --------");
+      console.log(status);
+      console.log("field: " + field);
     },
   },
 };

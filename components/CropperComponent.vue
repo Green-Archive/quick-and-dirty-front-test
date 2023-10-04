@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <Cropper
       ref="cropper"
@@ -43,4 +43,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->
