@@ -1,4 +1,4 @@
-// import Vue from "vue";
-// import VueCropper from "vue-cropperjs";
-// import "cropperjs/dist/cropper.css";
-// Vue.component("vue-cropper", VueCropper);
+import Vue from "vue";
+import { Cropper } from "vue-advanced-cropper";
+
+Vue.component("cropper", Cropper);

@@ -28,12 +28,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    { src: "~/plugins/datePicker", mode: "client" },
-    // { src: "~/plugins/cropImg" },
-    { src: "~/plugins/moment.js", ssr: false },
-    { src: "~/plugins/notifier.js" },
-  ],
+  plugins: [{ src: "~/plugins/cropImg", mode: "client" }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -48,45 +43,14 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
-    "@nuxtjs/auth-next",
-    "nuxt-webfontloader",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: "http://puangun.mfu.ac.th/api",
+    // baseURL: "http://puangun.mfu.ac.th/api",
     // baseURL: "https://mental-back.mfu-cits.com/api/v1/",
     // credentials: true,
-  },
-
-  auth: {
-    strategies: {
-      local: {
-        token: {
-          property: "response.token",
-          global: true,
-          required: true,
-          type: "Bearer",
-        },
-        user: {
-          property: "response.user",
-          autoFetch: true,
-        },
-
-        endpoints: {
-          login: {
-            url: "/auth/signin",
-            method: "post",
-          },
-          user: { url: "/auth/profile", method: "get" },
-          logout: false,
-        },
-      },
-    },
-    redirect: {
-      login: "/login",
-    },
   },
 
   webfontloader: {
